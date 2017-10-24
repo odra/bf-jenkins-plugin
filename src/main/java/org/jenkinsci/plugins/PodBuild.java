@@ -36,13 +36,15 @@ public class PodBuild extends Builder implements SimpleBuildStep {
         Launcher.ProcStarter proc = launcher.launch();
 
         ArgumentListBuilder args = new ArgumentListBuilder();
-        args.add("/usr/local/bin/pod");
-        args.add("repo");
-        args.add(this.repo);
-        args.add("update");
+        args
+                .add("/usr/local/bin/pod")
+                .add("repo")
+                .add("update")
+                .add(this.repo);
 
         int rc = proc
                 .cmds(args)
+                .envs(run.getEnvironment(taskListener))
                 .stdout(stdout)
                 .stderr(stderr)
                 .join();
